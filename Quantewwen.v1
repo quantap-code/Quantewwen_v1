@@ -1,84 +1,164 @@
-local HttpService = game:GetService("HttpService")
+--// Quantewwen_v1 GUI + ESP Auto
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local player = Players.LocalPlayer
 
--- Code đã encode
-local encoded LS0vLyBRdWFudGV3d2VuX3YxIEdVSQpsb2NhbCBQbGF5ZXJzID0gZ2FtZTpHZXRTZXJ2aWNlKCJQ
-bGF5ZXJzIikKbG9jYWwgcGxheWVyID0gUGxheWVycy5Mb2NhbFBsYXllcgoKLS0gVOG6oW8gR1VJ
-CmxvY2FsIFNjcmVlbkd1aSA9IEluc3RhbmNlLm5ldygiU2NyZWVuR3VpIiwgcGxheWVyOldhaXRG
-b3JDaGlsZCgiUGxheWVyR3VpIikpClNjcmVlbkd1aS5OYW1lID0gIlF1YW50ZXd3ZW5fdjEiCgps
-b2NhbCBtYWluRnJhbWUgPSBJbnN0YW5jZS5uZXcoIkZyYW1lIiwgU2NyZWVuR3VpKQptYWluRnJh
-bWUuU2l6ZSA9IFVEaW0yLm5ldygwLCAyMjAsIDAsIDI2MCkKbWFpbkZyYW1lLlBvc2l0aW9uID0g
-VURpbTIubmV3KDAuMywgMCwgMC4zLCAwKQptYWluRnJhbWUuQmFja2dyb3VuZENvbG9yMyA9IENv
-bG9yMy5mcm9tUkdCKDMwLCAzMCwgMzApCm1haW5GcmFtZS5BY3RpdmUgPSB0cnVlCm1haW5GcmFt
-ZS5EcmFnZ2FibGUgPSB0cnVlCgpsb2NhbCBVSVN0cm9rZSA9IEluc3RhbmNlLm5ldygiVUlTdHJv
-a2UiLCBtYWluRnJhbWUpClVJU3Ryb2tlLkNvbG9yID0gQ29sb3IzLmZyb21SR0IoMCwgMjU1LCAx
-NTApClVJU3Ryb2tlLlRoaWNrbmVzcyA9IDIKCmxvY2FsIFVJQ29ybmVyID0gSW5zdGFuY2UubmV3
-KCJVSUNvcm5lciIsIG1haW5GcmFtZSkKVUlDb3JuZXIuQ29ybmVyUmFkaXVzID0gVURpbS5uZXco
-MCwgMTIpCgpsb2NhbCB0aXRsZSA9IEluc3RhbmNlLm5ldygiVGV4dExhYmVsIiwgbWFpbkZyYW1l
-KQp0aXRsZS5TaXplID0gVURpbTIubmV3KDEsIDAsIDAsIDM1KQp0aXRsZS5CYWNrZ3JvdW5kVHJh
-bnNwYXJlbmN5ID0gMQp0aXRsZS5UZXh0ID0gIvCfjJAgUXVhbnRld3dlbl92MSIKdGl0bGUuVGV4
-dENvbG9yMyA9IENvbG9yMy5mcm9tUkdCKDAsIDI1NSwgMTUwKQp0aXRsZS5Gb250ID0gRW51bS5G
-b250LkdvdGhhbUJvbGQKdGl0bGUuVGV4dFNpemUgPSAxNgoKLS0gTsO6dCBoZWxwZXIKbG9jYWwg
-ZnVuY3Rpb24gY3JlYXRlQnV0dG9uKHRleHQsIG9yZGVyKQogICAgbG9jYWwgYnRuID0gSW5zdGFu
-Y2UubmV3KCJUZXh0QnV0dG9uIiwgbWFpbkZyYW1lKQogICAgYnRuLlNpemUgPSBVRGltMi5uZXco
-MSwgLTIwLCAwLCAzMCkKICAgIGJ0bi5Qb3NpdGlvbiA9IFVEaW0yLm5ldygwLCAxMCwgMCwgNDAg
-KyAob3JkZXIgKiAzNSkpCiAgICBidG4uQmFja2dyb3VuZENvbG9yMyA9IENvbG9yMy5mcm9tUkdC
-KDUwLCA1MCwgNTApCiAgICBidG4uVGV4dENvbG9yMyA9IENvbG9yMy5mcm9tUkdCKDI1NSwgMjU1
-LCAyNTUpCiAgICBidG4uRm9udCA9IEVudW0uRm9udC5Hb3RoYW1Cb2xkCiAgICBidG4uVGV4dFNp
-emUgPSAxNAogICAgYnRuLlRleHQgPSB0ZXh0CiAgICBsb2NhbCBjb3JuZXIgPSBJbnN0YW5jZS5u
-ZXcoIlVJQ29ybmVyIiwgYnRuKQogICAgY29ybmVyLkNvcm5lclJhZGl1cyA9IFVEaW0ubmV3KDAs
-IDgpCiAgICByZXR1cm4gYnRuCmVuZAoKLS0gTsO6dCBUb2dnbGUgR1VJCmxvY2FsIHRvZ2dsZUJ0
-biA9IEluc3RhbmNlLm5ldygiVGV4dEJ1dHRvbiIsIG1haW5GcmFtZSkKdG9nZ2xlQnRuLlNpemUg
-PSBVRGltMi5uZXcoMCwgMjUsIDAsIDI1KQp0b2dnbGVCdG4uUG9zaXRpb24gPSBVRGltMi5uZXco
-MSwgLTMwLCAwLCA1KQp0b2dnbGVCdG4uVGV4dCA9ICJYIgp0b2dnbGVCdG4uVGV4dFNpemUgPSAx
-NAp0b2dnbGVCdG4uRm9udCA9IEVudW0uRm9udC5Hb3RoYW1Cb2xkCnRvZ2dsZUJ0bi5CYWNrZ3Jv
-dW5kQ29sb3IzID0gQ29sb3IzLmZyb21SR0IoMjAwLCA1MCwgNTApCnRvZ2dsZUJ0bi5UZXh0Q29s
-b3IzID0gQ29sb3IzLmZyb21SR0IoMjU1LCAyNTUsIDI1NSkKbG9jYWwgdGNvcm5lciA9IEluc3Rh
-bmNlLm5ldygiVUlDb3JuZXIiLCB0b2dnbGVCdG4pCnRjb3JuZXIuQ29ybmVyUmFkaXVzID0gVURp
-bS5uZXcoMSwgMCkKdG9nZ2xlQnRuLk1vdXNlQnV0dG9uMUNsaWNrOkNvbm5lY3QoZnVuY3Rpb24o
-KQogICAgU2NyZWVuR3VpOkRlc3Ryb3koKQplbmQpCgotLSBMxrB1IHbhu4sgdHLDrQpsb2NhbCBz
-YXZlZFBvc2l0aW9ucyA9IHt9Cgpsb2NhbCBmdW5jdGlvbiBzYXZlUG9zKG5hbWUpCiAgICBpZiBw
-bGF5ZXIuQ2hhcmFjdGVyIGFuZCBwbGF5ZXIuQ2hhcmFjdGVyOkZpbmRGaXJzdENoaWxkKCJIdW1h
-bm9pZFJvb3RQYXJ0IikgdGhlbgogICAgICAgIHNhdmVkUG9zaXRpb25zW25hbWVdID0gcGxheWVy
-LkNoYXJhY3Rlci5IdW1hbm9pZFJvb3RQYXJ0LlBvc2l0aW9uCiAgICAgICAgcHJpbnQoIuKchSDE
-kMOjIGzGsHUgduG7iyB0csOtOiAiIC4uIG5hbWUpCiAgICBlbmQKZW5kCgotLSBIw6BtIGJheSBt
-xrDhu6N0CmxvY2FsIGZ1bmN0aW9uIFNtb290aEZseShocnAsIHRhcmdldCkKICAgIGxvY2FsIHNw
-ZWVkID0gODAKICAgIGxvY2FsIHN0ZXAgPSAwLjEKICAgIGxvY2FsIGRpcmVjdGlvbiA9ICh0YXJn
-ZXQgLSBocnAuUG9zaXRpb24pLlVuaXQKICAgIGxvY2FsIGRpc3RhbmNlID0gKGhycC5Qb3NpdGlv
-biAtIHRhcmdldCkuTWFnbml0dWRlCiAgICBsb2NhbCBtb3ZlZCA9IDAKCiAgICB3aGlsZSBtb3Zl
-ZCA8IGRpc3RhbmNlIGFuZCBwbGF5ZXIuQ2hhcmFjdGVyIGFuZCBwbGF5ZXIuQ2hhcmFjdGVyOkZp
-bmRGaXJzdENoaWxkKCJIdW1hbm9pZFJvb3RQYXJ0IikgZG8KICAgICAgICBocnAuQ0ZyYW1lID0g
-aHJwLkNGcmFtZSArIGRpcmVjdGlvbiAqIChzcGVlZCAqIHN0ZXApCiAgICAgICAgbW92ZWQgPSBt
-b3ZlZCArIChzcGVlZCAqIHN0ZXApCiAgICAgICAgdGFzay53YWl0KHN0ZXApCiAgICBlbmQKZW5k
-CgotLSBCYXkgdGhlbyBj4butYQpsb2NhbCBmdW5jdGlvbiBGbHlUb0Jhc2UoKQogICAgaWYgbm90
-IHNhdmVkUG9zaXRpb25zWyJCYXNlIl0gdGhlbgogICAgICAgIHdhcm4oIuKdjCBDaMawYSBsxrB1
-IEJhc2UhIikKICAgICAgICByZXR1cm4KICAgIGVuZAoKICAgIGxvY2FsIGhycCA9IHBsYXllci5D
-aGFyYWN0ZXIgYW5kIHBsYXllci5DaGFyYWN0ZXI6RmluZEZpcnN0Q2hpbGQoIkh1bWFub2lkUm9v
-dFBhcnQiKQogICAgaWYgbm90IGhycCB0aGVuIHJldHVybiBlbmQKCiAgICBsb2NhbCBjdXJyZW50
-WSA9IGhycC5Qb3NpdGlvbi5ZCiAgICBsb2NhbCBkb29yVGFyZ2V0ID0gbmlsCgogICAgaWYgY3Vy
-cmVudFkgPCAzMCBhbmQgc2F2ZWRQb3NpdGlvbnNbIkPhu61hIFThuqduZyAxIl0gdGhlbgogICAg
-ICAgIGRvb3JUYXJnZXQgPSBzYXZlZFBvc2l0aW9uc1siQ+G7rWEgVOG6p25nIDEiXQogICAgZWxz
-ZWlmIGN1cnJlbnRZIDwgNjAgYW5kIHNhdmVkUG9zaXRpb25zWyJD4butYSBU4bqnbmcgMiJdIHRo
-ZW4KICAgICAgICBkb29yVGFyZ2V0ID0gc2F2ZWRQb3NpdGlvbnNbIkPhu61hIFThuqduZyAyIl0K
-ICAgIGVsc2VpZiBzYXZlZFBvc2l0aW9uc1siQ+G7rWEgVOG6p25nIDMiXSB0aGVuCiAgICAgICAg
-ZG9vclRhcmdldCA9IHNhdmVkUG9zaXRpb25zWyJD4butYSBU4bqnbmcgMyJdCiAgICBlbmQKCiAg
-ICBpZiBkb29yVGFyZ2V0IHRoZW4KICAgICAgICBTbW9vdGhGbHkoaHJwLCBkb29yVGFyZ2V0ICsg
-VmVjdG9yMy5uZXcoMCwgNSwgMCkpCiAgICAgICAgdGFzay53YWl0KDAuNSkKICAgIGVuZAoKICAg
-IFNtb290aEZseShocnAsIHNhdmVkUG9zaXRpb25zWyJCYXNlIl0gKyBWZWN0b3IzLm5ldygwLCAx
-MCwgMCkpCmVuZAoKLS0gQ8OhYyBuw7p0CmxvY2FsIGJ0bkJhc2UgPSBjcmVhdGVCdXR0b24oIvCf
-k40gTMawdSBCYXNlIiwgMCkKYnRuQmFzZS5Nb3VzZUJ1dHRvbjFDbGljazpDb25uZWN0KGZ1bmN0
-aW9uKCkgc2F2ZVBvcygiQmFzZSIpIGVuZCkKCmxvY2FsIGJ0bkRvb3IxID0gY3JlYXRlQnV0dG9u
-KCLwn5qqIEzGsHUgQ+G7rWEgVOG6p25nIDEiLCAxKQpidG5Eb29yMS5Nb3VzZUJ1dHRvbjFDbGlj
-azpDb25uZWN0KGZ1bmN0aW9uKCkgc2F2ZVBvcygiQ+G7rWEgVOG6p25nIDEiKSBlbmQpCgpsb2Nh
-bCBidG5Eb29yMiA9IGNyZWF0ZUJ1dHRvbigi8J+aqiBMxrB1IEPhu61hIFThuqduZyAyIiwgMikK
-YnRuRG9vcjIuTW91c2VCdXR0b24xQ2xpY2s6Q29ubmVjdChmdW5jdGlvbigpIHNhdmVQb3MoIkPh
-u61hIFThuqduZyAyIikgZW5kKQoKbG9jYWwgYnRuRG9vcjMgPSBjcmVhdGVCdXR0b24oIvCfmqog
-TMawdSBD4butYSBU4bqnbmcgMyIsIDMpCmJ0bkRvb3IzLk1vdXNlQnV0dG9uMUNsaWNrOkNvbm5l
-Y3QoZnVuY3Rpb24oKSBzYXZlUG9zKCJD4butYSBU4bqnbmcgMyIpIGVuZCkKCmxvY2FsIGJ0bkZs
-eSA9IGNyZWF0ZUJ1dHRvbigi8J+agCBGbHkgduG7gSBCYXNlIiwgNCkKYnRuRmx5Lk1vdXNlQnV0
-dG9uMUNsaWNrOkNvbm5lY3QoRmx5VG9CYXNlKQ==
+-- GUI
+local ScreenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+ScreenGui.Name = "Quantewwen_v1"
 
--- Giải mã
-local decoded = HttpService:Base64Decode(encoded)
+local mainFrame = Instance.new("Frame", ScreenGui)
+mainFrame.Size = UDim2.new(0, 650, 0, 260)
+mainFrame.Position = UDim2.new(0.2, 0, 0.3, 0)
+mainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+mainFrame.Active = true
+mainFrame.Draggable = true
 
--- Chạy script gốc
-loadstring(decoded)()
+local UIStroke = Instance.new("UIStroke", mainFrame)
+UIStroke.Color = Color3.fromRGB(0, 255, 150)
+UIStroke.Thickness = 2
+Instance.new("UICorner", mainFrame).CornerRadius = UDim.new(0, 12)
+
+local title = Instance.new("TextLabel", mainFrame)
+title.Size = UDim2.new(1, 0, 0, 35)
+title.BackgroundTransparency = 1
+title.Text = "🌐 Quantewwen_v1"
+title.TextColor3 = Color3.fromRGB(0, 255, 150)
+title.Font = Enum.Font.GothamBold
+title.TextSize = 16
+
+-- Helper tạo nút
+local function createButton(text, col, row)
+    local btn = Instance.new("TextButton", mainFrame)
+    btn.Size = UDim2.new(0, 200, 0, 30)
+    btn.Position = UDim2.new(0, 10 + ((col-1) * 210), 0, 40 + (row * 35))
+    btn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    btn.Font = Enum.Font.GothamBold
+    btn.TextSize = 14
+    btn.Text = text
+    Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 8)
+    return btn
+end
+
+-- Đóng GUI
+local toggleBtn = Instance.new("TextButton", mainFrame)
+toggleBtn.Size = UDim2.new(0, 25, 0, 25)
+toggleBtn.Position = UDim2.new(1, -30, 0, 5)
+toggleBtn.Text = "X"
+toggleBtn.TextSize = 14
+toggleBtn.Font = Enum.Font.GothamBold
+toggleBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+toggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+Instance.new("UICorner", toggleBtn).CornerRadius = UDim.new(1, 0)
+toggleBtn.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy()
+end)
+
+-- Lưu vị trí
+local savedPositions, savedTimes = {}, {}
+local function savePos(name)
+    if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+        savedPositions[name] = player.Character.HumanoidRootPart.Position
+        savedTimes[name] = os.time()
+    end
+end
+
+-- Fly mượt
+local function SmoothFly(hrp, target)
+    local speed, step = 120, 0.05
+    local direction = (target - hrp.Position).Unit
+    local distance = (hrp.Position - target).Magnitude
+    local moved = 0
+    while moved < distance and player.Character and player.Character:FindFirstChild("HumanoidRootPart") do
+        hrp.CFrame = hrp.CFrame + direction * (speed * step)
+        moved = moved + (speed * step)
+        task.wait(step)
+    end
+end
+local function FlyToBase()
+    if not savedPositions["Base"] then return end
+    local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+    if not hrp then return end
+    SmoothFly(hrp, savedPositions["Base"] + Vector3.new(0, 10, 0))
+end
+
+-- NoClip
+local noclip = false
+local function toggleNoclip()
+    noclip = not noclip
+end
+RunService.Stepped:Connect(function()
+    if noclip and player.Character and player.Character:FindFirstChild("Humanoid") then
+        player.Character.Humanoid:ChangeState(11)
+    end
+end)
+
+-- ESP
+local espFolder = Instance.new("Folder", workspace)
+espFolder.Name = "QuantewwenESP"
+
+local function clearESP()
+    for _, v in pairs(espFolder:GetChildren()) do v:Destroy() end
+end
+
+local function createESP(target, text, color)
+    local billboard = Instance.new("BillboardGui", espFolder)
+    billboard.Adornee = target
+    billboard.Size = UDim2.new(0, 100, 0, 50)
+    billboard.AlwaysOnTop = true
+
+    local label = Instance.new("TextLabel", billboard)
+    label.Size = UDim2.new(1, 0, 1, 0)
+    label.BackgroundTransparency = 1
+    label.Text = text
+    label.TextColor3 = color
+    label.Font = Enum.Font.GothamBold
+    label.TextSize = 14
+end
+
+local espPlayers, espBase, espSecret = false, false, false
+
+RunService.RenderStepped:Connect(function()
+    clearESP()
+    if espPlayers then
+        for _, plr in pairs(Players:GetPlayers()) do
+            if plr.Character and plr.Character:FindFirstChild("HumanoidRootPart") and plr ~= player then
+                createESP(plr.Character.HumanoidRootPart, "👤 " .. plr.Name, Color3.fromRGB(255, 0, 0))
+            end
+        end
+    end
+    if espBase and savedPositions["Base"] then
+        local part = Instance.new("Part", espFolder)
+        part.Size = Vector3.new(2,2,2)
+        part.Anchored, part.CanCollide, part.Transparency = true, false, 0.5
+        part.Color = Color3.fromRGB(0,255,0)
+        part.Position = savedPositions["Base"]
+
+        local remain = 600 - (os.time() - (savedTimes["Base"] or os.time()))
+        if remain < 0 then remain = 0 end
+        createESP(part, "🏠 Base ("..remain.."s)", Color3.fromRGB(0,255,0))
+    end
+    if espSecret then
+        for _, v in pairs(workspace:GetDescendants()) do
+            if v:IsA("Part") and v.Name:lower():find("secret") then
+                createESP(v, "❓ Secret", Color3.fromRGB(0,0,255))
+            end
+        end
+    end
+end)
+
+-- Cột 1 (Save Pos)
+createButton("📍 Lưu Base", 1, 0).MouseButton1Click:Connect(function() savePos("Base") end)
+createButton("🚪 Lưu Cửa Tầng 1", 1, 1).MouseButton1Click:Connect(function() savePos("Cửa Tầng 1") end)
+createButton("🚪 Lưu Cửa Tầng 2", 1, 2).MouseButton1Click:Connect(function() savePos("Cửa Tầng 2") end)
+createButton("🚪 Lưu Cửa Tầng 3", 1, 3).MouseButton1Click:Connect(function() savePos("Cửa Tầng 3") end)
+
+-- Cột 2 (Di chuyển)
+createButton("🚀 Fly về Base", 2, 0).MouseButton1Click:Connect(FlyToBase)
+createButton("👻 Noclip", 2, 1).MouseButton1Click:Connect(toggleNoclip)
+
+-- Cột 3 (ESP Toggle)
+createButton("🔴 ESP Player", 3, 0).MouseButton1Click:Connect(function() espPlayers = not espPlayers end)
+createButton("🟢 ESP Base", 3, 1).MouseButton1Click:Connect(function() espBase = not espBase end)
+createButton("🔵 ESP Secret", 3, 2).MouseButton1Click:Connect(function() espSecret = not espSecret end)
